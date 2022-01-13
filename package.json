@@ -1,0 +1,36 @@
+{
+  "name": "date-picker",
+  "version": "1.0.0",
+  "description": "Fanimal coding challenge",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server/index.js",
+    "build": "webpack watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ggbbi/date-picker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ggbbi/date-picker/issues"
+  },
+  "homepage": "https://github.com/ggbbi/date-picker#readme",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "express": "^4.17.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "webpack": "^5.66.0",
+    "webpack-cli": "^4.9.1"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.16.8",
+    "@babel/preset-react": "^7.16.7",
+    "babel-loader": "^8.2.3",
+    "nodemon": "^2.0.15"
+  }
+}
