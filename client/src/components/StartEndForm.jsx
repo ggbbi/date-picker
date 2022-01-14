@@ -13,6 +13,7 @@ function StartEndForm() {
         name="check-in"
         required
         value={checkinDate}
+        style={{caretColor: 'transparent'}}
       />
       <label for="check-out">Check out</label>
       <input
@@ -21,6 +22,7 @@ function StartEndForm() {
         name="check-out"
         required
         value={checkoutDate}
+        style={{caretColor: 'transparent'}}
       />
     </form>
   )
