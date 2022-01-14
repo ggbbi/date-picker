@@ -1,21 +1,29 @@
 import React, { useEffect } from 'react';
 
 function Calendar({ inDate, outDate, changeDate }) {
-  let today = new Date();
-  let daysInCurrentMonth = 0;
+  let currentDate = new Date();
+  var displayedDate = null;
+  var displayedYear = null;
+  var displayedMonth = null;
+  var daysInMonth = 0;
 
   useEffect(() => {
-    daysInCurrentMonth = getDaysInMonth(today.getFullYear(), today.getMonth());
-  }, []);
+    if (!displayedDate) {
+      displayedDate = currentDate;
+      displayedYear = displayedDate.getFullYear();
+      displayedMonth = displayedDate.getMonth();
+    }
+    daysInMonth = getDaysInMonth(displayedYear, displayedMonth);
+  }, [ displayedDate ]);
 
   function getDaysInMonth(y, m) {
     return new Date(y, m, 0).getDate();
   }
   function clickNext() {
-    // add 1 to current month
+    displayedDate = displayedDate.setMonth(displayedMonth + 1, 1);
   }
   function clickBack() {
-    // subtract 1 from current month
+    displayedDate = displayedDate.setMonth(displayedMonth - 1, 1);
   }
   return (
     <div class="calendar-group">
@@ -25,7 +33,6 @@ function Calendar({ inDate, outDate, changeDate }) {
             <th colspan="7">Calendar</th>
           </tr>
           <tr>
-            {/* could be replaced */}
             <th>Su</th>
             <th>M</th>
             <th>Tu</th>
@@ -36,23 +43,24 @@ function Calendar({ inDate, outDate, changeDate }) {
           </tr>
         </thead>
         <tbody>
-          {/* {
-            // for each date of the month,
-            for(let i = 0; i < daysInThisMonth; i++) {
+          {
+            daysInMonth.map((date) => {
+              var CalendarElem = null;
+
+              if (displayedDate.getDay() == 6) {
+                return
+              } else if (displayedDate.getDay() == 0) {
+                return
+              }
               // while the day does not match the day of the current col,
               // create a day col in this row with no value
               // increment the weekday
-              while() {
-
-              }
-              // if it's sunday (day 6)
-              // start a new row
-              if() {
+              while(displayedDate.getDate() !== date) {
 
               }
               // create a day col with the date as the value
-            }
-          } */}
+            })
+          }
         </tbody>
       </table>
     </div>

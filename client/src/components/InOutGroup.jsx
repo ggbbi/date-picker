@@ -29,10 +29,10 @@ function InOutGroup ({ inDate, outDate, chooseDate }) {
       <div className="in-out-label">Check in</div>
       <div className="in-out-label">Check out</div>
       <div className="in-out" id="check-in" onClick={(e) => clickInOut(e)}>
-        { !inDate ? 'Choose dates' : null }
+        { !inDate ? 'Choose dates' : inDate }
       </div>
       <div className="in-out" id="check-out" onClick={(e) => clickInOut(e)}>
-        { !outDate ? 'Choose dates' : null }
+        { !outDate ? 'Choose dates' : outDate }
       </div>
     </div>
   );
