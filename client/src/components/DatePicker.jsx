@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import InOutForm from './InOutForm.jsx'
+import React, { useState, useEffect } from 'react';
+import InOutForm from './InOutForm.jsx';
+import Calendar from './Calendar.jsx';
 
 function DatePicker() {
-  var [ inDate, setInDate ] = useState(0);
-  var [ outDate, setOutDate ] = useState(0);
+  var [ inDate, setInDate ] = useState(null);
+  var [ outDate, setOutDate ] = useState(null);
+  var [ showCal, setShowCal ] = useState(false);
 
-  useEffect(() => {}, [inDate, outDate]);
+  useEffect(() => {}, [inDate, outDate, showCal]);
 
   function changeDate(type, value) {
     if (type == 'inDate') {
@@ -15,11 +17,28 @@ function DatePicker() {
     }
   }
 
+  function chooseDate(type) {
+    setShowCal(!showCal);
+  }
+
   return (
     <div class="app">
-      <InOutForm changeDate={changeDate} inDate={inDate} outDate={outDate} />
+      <InOutForm
+        inDate={inDate}
+        outDate={outDate}
+        changeDate={changeDate}
+        chooseDate={chooseDate}
+      />
+      {
+        showCal ?
+        <Calendar
+          inDate={inDate}
+          outDate={outDate}
+          showCal={showCal}
+        /> : null
+      }
     </div>
   );
 }
 
-export default DatePicker
+export default DatePicker;
