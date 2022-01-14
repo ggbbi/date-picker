@@ -9,30 +9,30 @@ function DatePicker() {
 
   useEffect(() => {}, [inDate, outDate, showCal]);
 
+  function chooseDate(type) {
+    setShowCal(!showCal);
+  }
   function changeDate(type, value) {
+    // new Intl.DateTimeFormat('en-US').format(date)
     if (type == 'inDate') {
       setInDate(value);
     } else if (type == 'outDate') {
       setOutDate(value);
     }
   }
-  function chooseDate(type) {
-    setShowCal(!showCal);
-  }
   return (
     <div className="date-picker">
       <InOutGroup
         inDate={inDate}
         outDate={outDate}
-        changeDate={changeDate}
         chooseDate={chooseDate}
-      />
+        />
       {
         showCal ?
         <Calendar
           inDate={inDate}
           outDate={outDate}
-          showCal={showCal}
+          changeDate={changeDate}
         /> : null
       }
     </div>

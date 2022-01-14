@@ -15,3 +15,12 @@
 .in-out-active {
   background-color: #B6B6B6;
 }
+.calendar-group {
+  display: grid;
+  grid-template-columns: 1fr;
+  background-color: #B6B6B6;
+}
+.calendar {
+  width: 100%
+
+}
