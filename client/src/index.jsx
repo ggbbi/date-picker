@@ -1,5 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App.jsx';
+import DatePicker from './components/DatePicker.jsx';
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<DatePicker />, document.getElementById('app'));

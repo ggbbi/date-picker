@@ -1,18 +1,17 @@
-import React from 'react';
+import React from 'react'
 
-function StartEndForm() {
-  var checkinDate = '';
-  var checkoutDate = '';
+function InOutForm ({ changeDate, inDate, outDate }) {
+  console.log(inDate, outDate)
 
   return (
-    <form class="start-end-form">
+    <form class="in-out-form">
       <label for="check-in">Check in</label>
       <input
         id="check-in-input"
         type="text"
         name="check-in"
         required
-        value={checkinDate}
+        value={inDate}
         style={{caretColor: 'transparent'}}
       />
       <label for="check-out">Check out</label>
@@ -21,11 +20,11 @@ function StartEndForm() {
         type="text"
         name="check-out"
         required
-        value={checkoutDate}
+        value={outDate}
         style={{caretColor: 'transparent'}}
       />
     </form>
-  )
+  );
 }
 
-export default StartEndForm;
+export default InOutForm
