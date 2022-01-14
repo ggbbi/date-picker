@@ -1,3 +1,17 @@
-/* .inputselect {
-  caret-color: transparent;
-} */
+#app {
+  font-family: 'Ubuntu', sans-serif;
+}
+.date-picker {
+  margin: 5% 20%;
+}
+.in-out-group {
+  display: grid;
+  grid-template-columns: 6fr 6fr;
+  column-gap: 2em;
+}
+.in-out {
+  background-color: #EBEBEB;
+}
+.in-out-active {
+  background-color: #B6B6B6;
+}

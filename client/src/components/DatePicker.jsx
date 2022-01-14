@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import InOutForm from './InOutForm.jsx';
+import InOutGroup from './InOutGroup.jsx';
 import Calendar from './Calendar.jsx';
 
 function DatePicker() {
@@ -16,14 +16,12 @@ function DatePicker() {
       setOutDate(value);
     }
   }
-
   function chooseDate(type) {
     setShowCal(!showCal);
   }
-
   return (
-    <div class="app">
-      <InOutForm
+    <div className="date-picker">
+      <InOutGroup
         inDate={inDate}
         outDate={outDate}
         changeDate={changeDate}
