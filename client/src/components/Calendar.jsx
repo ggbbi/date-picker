@@ -24,8 +24,7 @@ function Calendar({ inDate, outDate, changeDate }) {
       var y = selectedDate.getFullYear();
       var m = selectedDate.getMonth();
       if (inDate || outDate) {
-        var dateElements = document.querySelectorAll('.date');
-        dateElements.forEach((element) => {
+        document.querySelectorAll('.date').forEach((element) => {
           var date = new Date(y, m, element.textContent);
           if (date > new Date(inDate) && date < new Date(outDate)) {
             element.classList.add('date-active');
@@ -33,6 +32,7 @@ function Calendar({ inDate, outDate, changeDate }) {
             || date.toLocaleDateString('en-us') == outDate)
           {
             element.classList.add('date-in-out-active');
+            element.classList.remove('date-active');
           } else {
             element.classList.remove('date-active');
             element.classList.remove('date-in-out-active');
@@ -103,7 +103,7 @@ function Calendar({ inDate, outDate, changeDate }) {
               <th colSpan="1" onClick={clickNext}>&gt;</th>
             </tr>
             <tr>
-              { weekdays.map((day, i) => <th key={i}>{day}</th>) }
+              { weekdays.map((day, i) => <th key={i} className="wkday">{day}</th>) }
             </tr>
           </thead>
           <tbody>

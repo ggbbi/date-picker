@@ -2,11 +2,12 @@
   font-family: 'Ubuntu', sans-serif;
 }
 .date-picker {
-  margin: 5% 20%;
+  margin: 5% 30%;
 }
 .in-out-group {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  justify-items: center;
 }
 .in-out-label {
   width: fit-content;
@@ -15,19 +16,20 @@
 .in-out {
   background-color: #EBEBEB;
   width: fit-content;
-  padding: 0 2%;
+  padding: 2%;
 }
 .in-out-active {
   background-color: #B6B6B6;
+  color: #ffffff;
 }
 .calendar-group {
   display: grid;
   grid-template-columns: 1fr;
   margin: 2% 0;
+  justify-items: center;
 }
 .calendar {
   width: 100%;
-
 }
 .date-active {
   background-color: #B6B6B6;
@@ -35,10 +37,11 @@
 .date-in-out-active {
   border: 2px solid #B6B6B6;
 }
+.wkday {
+  color: #B6B6B6;
+  margin: 5% 0;
+}
 table {
   table-layout: fixed;
   text-align: center;
-}
-th {
-  background-color: #B6B6B6;
 }
