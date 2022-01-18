@@ -29,6 +29,12 @@
   width: 100%;
 
 }
+.date-active {
+  background-color: #B6B6B6;
+}
+.date-in-out-active {
+  border: 2px solid #B6B6B6;
+}
 table {
   table-layout: fixed;
   text-align: center;

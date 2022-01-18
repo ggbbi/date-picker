@@ -15,6 +15,7 @@ function InOutGroup ({ inDate, outDate, active, chooseDate }) {
       checkOut.classList.remove('in-out-active');
     }
   }, [ active ])
+
   function clickInOut(e) {
     if (e.target.classList.contains('in-out-active')) {
       chooseDate(e.target.id);

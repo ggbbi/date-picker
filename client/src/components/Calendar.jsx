@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-function Calendar({ changeDate }) {
-  var [ selectedDate, setSelectedDate ] = useState();
+function Calendar({ inDate, outDate, changeDate }) {
+  var [ selectedDate, setSelectedDate ] = useState(null);
   var [ firstWeek, setFirstWeek ] = useState([]);
   var [ otherWeeks, setOtherWeeks ] = useState([]);
   var weekdays = getWeekdays();
@@ -18,6 +18,29 @@ function Calendar({ changeDate }) {
       setOtherWeeks(getOtherWeeks(y, m));
     }
   }, [ selectedDate ]);
+
+  useEffect(() => {
+    if (selectedDate) {
+      var y = selectedDate.getFullYear();
+      var m = selectedDate.getMonth();
+      if (inDate || outDate) {
+        var dateElements = document.querySelectorAll('.date');
+        dateElements.forEach((element) => {
+          var date = new Date(y, m, element.textContent);
+          if (date > new Date(inDate) && date < new Date(outDate)) {
+            element.classList.add('date-active');
+          } else if (date.toLocaleDateString('en-us') == inDate
+            || date.toLocaleDateString('en-us') == outDate)
+          {
+            element.classList.add('date-in-out-active');
+          } else {
+            element.classList.remove('date-active');
+            element.classList.remove('date-in-out-active');
+          }
+        });
+      }
+    }
+  }, [ inDate, outDate, firstWeek ])
 
   function getWeekdays() {
     var weekdays = [];
@@ -75,7 +98,7 @@ function Calendar({ changeDate }) {
             <tr>
               <th colSpan="1" onClick={clickBack}>&lt;</th>
               <th colSpan="5">
-                { selectedDate.toLocaleDateString('en-US', { month: 'long' }) }
+                { selectedDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) }
               </th>
               <th colSpan="1" onClick={clickNext}>&gt;</th>
             </tr>
@@ -87,7 +110,11 @@ function Calendar({ changeDate }) {
             <tr>
               {
                 firstWeek.map((date, i) =>
-                  <td key={i} onClick={e => clickDate(e.target.innerHTML)}>{date}</td>
+                  <td
+                    key={i}
+                    className="date"
+                    onClick={e => clickDate(e.target.innerHTML)}
+                  >{date}</td>
                 )
               }
             </tr>
@@ -96,7 +123,11 @@ function Calendar({ changeDate }) {
                 <tr key={i}>
                   {
                     week.map((date, i) =>
-                      <td key={i} onClick={e => clickDate(e.target.innerHTML)}>{date}</td>
+                      <td
+                        key={i}
+                        className="date"
+                        onClick={e => clickDate(e.target.innerHTML)}
+                      >{date}</td>
                     )
                   }
                 </tr>

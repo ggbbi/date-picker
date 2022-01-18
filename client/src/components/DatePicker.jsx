@@ -3,10 +3,10 @@ import InOutGroup from './InOutGroup.jsx';
 import Calendar from './Calendar.jsx';
 
 function DatePicker() {
-  var [ inDate, setInDate ] = useState();
-  var [ outDate, setOutDate ] = useState();
+  var [ inDate, setInDate ] = useState(null);
+  var [ outDate, setOutDate ] = useState(null);
   var [ showCal, setShowCal ] = useState(false);
-  var [ active, setActive ] = useState()
+  var [ active, setActive ] = useState(null)
 
   useEffect(() => {}, [inDate, outDate, showCal]);
 
@@ -46,6 +46,8 @@ function DatePicker() {
       {
         showCal ?
         <Calendar
+          inDate={inDate}
+          outDate={outDate}
           changeDate={changeDate}
         /> : null
       }
