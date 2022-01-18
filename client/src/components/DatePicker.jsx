@@ -3,21 +3,28 @@ import InOutGroup from './InOutGroup.jsx';
 import Calendar from './Calendar.jsx';
 
 function DatePicker() {
-  var [ inDate, setInDate ] = useState(null);
-  var [ outDate, setOutDate ] = useState(null);
+  var [ inDate, setInDate ] = useState();
+  var [ outDate, setOutDate ] = useState();
   var [ showCal, setShowCal ] = useState(false);
+  var [ active, setActive ] = useState()
 
   useEffect(() => {}, [inDate, outDate, showCal]);
 
   function chooseDate(type) {
-    setShowCal(!showCal);
+    if (type == active || !active) {
+      setShowCal(!showCal);
+    }
+    if (type !== active) {
+      setActive(type);
+    } else {
+      setActive(null);
+    }
   }
-  function changeDate(type, value) {
-    // new Intl.DateTimeFormat('en-US').format(date)
-    if (type == 'inDate') {
-      setInDate(value);
-    } else if (type == 'outDate') {
-      setOutDate(value);
+  function changeDate(value) {
+    if (active == 'check-in') {
+      setInDate(value.toLocaleDateString('en-us'));
+    } else if (active == 'check-out') {
+      setOutDate(value.toLocaleDateString('en-us'));
     }
   }
   return (
@@ -30,8 +37,6 @@ function DatePicker() {
       {
         showCal ?
         <Calendar
-          inDate={inDate}
-          outDate={outDate}
           changeDate={changeDate}
         /> : null
       }

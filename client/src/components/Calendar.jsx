@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function Calendar({ inDate, outDate, changeDate }) {
+function Calendar({ changeDate }) {
   var [ selectedDate, setSelectedDate ] = useState();
   var [ firstWeek, setFirstWeek ] = useState([]);
   var [ otherWeeks, setOtherWeeks ] = useState([]);
@@ -61,6 +61,11 @@ function Calendar({ inDate, outDate, changeDate }) {
     var m = selectedDate.getMonth();
     setSelectedDate(new Date(selectedDate.setMonth(m - 1, 1)));
   }
+  function clickDate(date) {
+    var y = selectedDate.getFullYear();
+    var m = selectedDate.getMonth();
+    changeDate(new Date(y, m, date));
+  }
   return (
     <div className="calendar-group">
       {
@@ -86,7 +91,9 @@ function Calendar({ inDate, outDate, changeDate }) {
               otherWeeks.map((week, i) => (
                 <tr key={i}>
                   {
-                    week.map((date, i) => <td key={i}>{date}</td>)
+                    week.map((date, i) => (
+                      <td key={i} onClick={e => clickDate(e.target.innerHTML)}>{date}</td>
+                    ))
                   }
                 </tr>
               ))

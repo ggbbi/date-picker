@@ -7,18 +7,16 @@ function InOutGroup ({ inDate, outDate, chooseDate }) {
       e.target.classList.remove('in-out-active');
     } else {
       if (e.target.id == 'check-in') {
+        chooseDate(e.target.id);
         var checkOut = document.getElementById('check-out');
         if (checkOut.classList.contains('in-out-active')) {
           checkOut.classList.remove('in-out-active');
-        } else {
-          chooseDate(e.target.id);
         }
       } else if (e.target.id == 'check-out') {
+        chooseDate(e.target.id);
         var checkIn = document.getElementById('check-in');
         if (checkIn.classList.contains('in-out-active')) {
           checkIn.classList.remove('in-out-active');
-        } else {
-          chooseDate(e.target.id);
         }
       }
       e.target.classList.add('in-out-active');
