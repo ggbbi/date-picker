@@ -1,23 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 
-function InOutGroup ({ inDate, outDate, chooseDate }) {
+function InOutGroup ({ inDate, outDate, active, chooseDate }) {
+  useEffect(() => {
+    var checkIn = document.getElementById('check-in');
+    var checkOut = document.getElementById('check-out');
+    if (active == 'check-in') {
+      checkIn.classList.add('in-out-active');
+      checkOut.classList.remove('in-out-active');
+    } else if (active == 'check-out') {
+      checkIn.classList.remove('in-out-active');
+      checkOut.classList.add('in-out-active');
+    } else {
+      checkIn.classList.remove('in-out-active');
+      checkOut.classList.remove('in-out-active');
+    }
+  }, [ active ])
   function clickInOut(e) {
     if (e.target.classList.contains('in-out-active')) {
       chooseDate(e.target.id);
-      e.target.classList.remove('in-out-active');
     } else {
       if (e.target.id == 'check-in') {
         chooseDate(e.target.id);
-        var checkOut = document.getElementById('check-out');
-        if (checkOut.classList.contains('in-out-active')) {
-          checkOut.classList.remove('in-out-active');
-        }
       } else if (e.target.id == 'check-out') {
         chooseDate(e.target.id);
-        var checkIn = document.getElementById('check-in');
-        if (checkIn.classList.contains('in-out-active')) {
-          checkIn.classList.remove('in-out-active');
-        }
       }
       e.target.classList.add('in-out-active');
     }

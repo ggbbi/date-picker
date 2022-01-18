@@ -23,6 +23,7 @@ function DatePicker() {
   function changeDate(value) {
     if (active == 'check-in') {
       setInDate(value.toLocaleDateString('en-us'));
+      chooseDate('check-out');
     } else if (active == 'check-out') {
       setOutDate(value.toLocaleDateString('en-us'));
     }
@@ -32,6 +33,7 @@ function DatePicker() {
       <InOutGroup
         inDate={inDate}
         outDate={outDate}
+        active={active}
         chooseDate={chooseDate}
         />
       {
