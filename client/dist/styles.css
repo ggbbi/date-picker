@@ -18,9 +18,16 @@
 .calendar-group {
   display: grid;
   grid-template-columns: 1fr;
-  background-color: #B6B6B6;
+  margin: 2% 0;
 }
 .calendar {
-  width: 100%
+  width: 100%;
 
+}
+table {
+  table-layout: fixed;
+  text-align: center;
+}
+th {
+  background-color: #B6B6B6;
 }

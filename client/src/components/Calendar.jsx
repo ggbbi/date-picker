@@ -1,79 +1,73 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function Calendar({ inDate, outDate, changeDate }) {
-  var currentDate = null;
-  var displayedDate = null;
-  var displayedYear = null;
-  var displayedMonth = null;
+  var [ selectedDate, setSelectedDate ] = useState();
+  var [ displayedYear, setDisplayedYear ] = useState();
+  var [ displayedMonth, setDisplayedMonth ] = useState();
+  var [ firstWeek, setFirstWeek ] = useState([]);
+  var [ otherWeeks, setOtherWeeks ] = useState([]);
   var weekdays = getWeekdays();
-  var daysInMonth = 0;
 
   useEffect(() => {
-    currentDate = new Date();
-    displayedDate = currentDate;
-    displayedYear = displayedDate.getFullYear();
-    displayedMonth = displayedDate.getMonth();
+    new Promise(() => setSelectedDate(new Date()))
+    .then(() => setDisplayedYear(selectedDate.getFullYear()))
+    .then(() => setDisplayedMonth(selectedDate.getMonth()));
   }, [])
 
   useEffect(() => {
-    daysInMonth = getDaysInMonth(displayedYear, displayedMonth);
-  }, [ displayedDate ]);
+    if (selectedDate) {
+      setDisplayedYear(selectedDate.getFullYear());
+      setDisplayedMonth(selectedDate.getMonth());
+      setFirstWeek(getFirstWeek(displayedYear, displayedMonth));
+    }
+  }, [ selectedDate ]);
 
   function getWeekdays() {
     var weekdays = [];
     var day = new Date(Date.UTC(2021, 0, 18));
     for (let i = 0; i < 7; i++) {
-      weekdays.push(day.toLocaleDateString('en-US', { weekday: 'long' }).substring(0, 3));
+      weekdays.push(day.toLocaleDateString('en-US', { weekday: 'short' }));
       day.setDate(day.getDate() + 1);
     }
     return weekdays;
   }
-  function getDaysInMonth(y, m) {
-    return new Date(y, m, 0).getDate();
+  function getFirstWeek(y, m) {
+    var firstDay = new Date(y, m, 1).getDay();
+    var firstWeek = [];
+    for (let i = 0; i < firstDay; i++) {
+      firstWeek.push('');
+    }
+    for (let i = 0; i < 7 - firstDay; i++) {
+      firstWeek.push(i + 1);
+    }
+    return firstWeek;
   }
   function clickNext() {
-    displayedDate = displayedDate.setMonth(displayedMonth + 1, 1);
+    setSelectedDate(selectedDate.setMonth(displayedMonth + 1, 1));
   }
   function clickBack() {
-    displayedDate = displayedDate.setMonth(displayedMonth - 1, 1);
+    setSelectedDate(selectedDate.setMonth(displayedMonth - 1, 1));
   }
   return (
-    <div class="calendar-group">
-      <table class="calendar">
-        <thead>
-          <tr>
-            <th colspan="7">Calendar</th>
-          </tr>
-          <tr>
-            {
-              weekdays.map(day => (<th>{day}</th>))
-            }
-          </tr>
-        </thead>
-        <tbody>
-          {
-            Array(daysInMonth).map((date) => {
-              // use negative number? same month, date: -weekday of 1st
-              var CalendarElem = null;
-
-
-
-              // if (displayedDate.getDay() == 6) {
-              //   return
-              // } else if (displayedDate.getDay() == 0) {
-              //   return
-              // }
-              // // while the day does not match the day of the current col,
-              // // create a day col in this row with no value
-              // // increment the weekday
-              // while(displayedDate.getDate() !== date) {
-
-              // }
-              // create a day col with the date as the value
-            })
-          }
-        </tbody>
-      </table>
+    <div className="calendar-group">
+      {
+        selectedDate ?
+        <table className="calendar">
+          <thead>
+            <tr>
+              <th colspan="7">{ selectedDate.toLocaleDateString('en-US', { month: 'long' }) }</th>
+            </tr>
+            <tr>
+              { weekdays.map(day => (<th>{day}</th>)) }
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              { firstWeek.map(date => (<td>{date}</td>)) }
+            </tr>
+          </tbody>
+        </table> : null
+      }
     </div>
   );
 }
