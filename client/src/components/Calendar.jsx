@@ -16,9 +16,9 @@ function Calendar({ inDate, outDate, changeDate }) {
 
   useEffect(() => {
     if (selectedDate) {
-      setDisplayedYear(selectedDate.getFullYear());
-      setDisplayedMonth(selectedDate.getMonth());
-      setFirstWeek(getFirstWeek(displayedYear, displayedMonth));
+      new Promise(() => setDisplayedYear(selectedDate.getFullYear()))
+      .then(() => setDisplayedMonth(selectedDate.getMonth()))
+      .then(() => setFirstWeek(getFirstWeek(displayedYear, displayedMonth)));
     }
   }, [ selectedDate ]);
 
@@ -33,14 +33,17 @@ function Calendar({ inDate, outDate, changeDate }) {
   }
   function getFirstWeek(y, m) {
     var firstDay = new Date(y, m, 1).getDay();
-    var firstWeek = [];
+    var week = [];
     for (let i = 0; i < firstDay; i++) {
-      firstWeek.push('');
+      week.push('');
     }
     for (let i = 0; i < 7 - firstDay; i++) {
-      firstWeek.push(i + 1);
+      week.push(i + 1);
     }
-    return firstWeek;
+    return week;
+  }
+  function getOtherWeeks(y, m) {
+
   }
   function clickNext() {
     setSelectedDate(selectedDate.setMonth(displayedMonth + 1, 1));
@@ -58,13 +61,14 @@ function Calendar({ inDate, outDate, changeDate }) {
               <th colspan="7">{ selectedDate.toLocaleDateString('en-US', { month: 'long' }) }</th>
             </tr>
             <tr>
-              { weekdays.map(day => (<th>{day}</th>)) }
+              { weekdays.map(day => <th>{day}</th>) }
             </tr>
           </thead>
           <tbody>
             <tr>
-              { firstWeek.map(date => (<td>{date}</td>)) }
+              { firstWeek.map(date => <td>{date}</td>) }
             </tr>
+            { otherWeeks.map(date => <td>{date}</td>) }
           </tbody>
         </table> : null
       }

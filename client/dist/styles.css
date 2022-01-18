@@ -6,11 +6,16 @@
 }
 .in-out-group {
   display: grid;
-  grid-template-columns: 6fr 6fr;
-  column-gap: 2em;
+  grid-template-columns: 1fr 1fr;
+}
+.in-out-label {
+  width: fit-content;
+  padding: 0 2%;
 }
 .in-out {
   background-color: #EBEBEB;
+  width: fit-content;
+  padding: 0 2%;
 }
 .in-out-active {
   background-color: #B6B6B6;
