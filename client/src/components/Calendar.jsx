@@ -45,7 +45,7 @@ function Calendar({ inDate, outDate, changeDate }) {
     for (let i = 8 - firstDay; i < new Date(y, m, 0).getDate(); i += 7) {
       var week = [];
       for (let j = 0; j < 7; j++) {
-        if (i + j <= new Date(y, m, 0).getDate()) {
+        if (i + j <= new Date(y, m + 1, 0).getDate()) {
           week.push(i + j);
         }
       }
@@ -53,12 +53,14 @@ function Calendar({ inDate, outDate, changeDate }) {
     }
     return weeks;
   }
-  // function clickNext() {
-  //   setSelectedDate(selectedDate.setMonth(displayedMonth + 1, 1));
-  // }
-  // function clickBack() {
-  //   setSelectedDate(selectedDate.setMonth(displayedMonth - 1, 1));
-  // }
+  function clickNext() {
+    var m = selectedDate.getMonth();
+    setSelectedDate(new Date(selectedDate.setMonth(m + 1, 1)));
+  }
+  function clickBack() {
+    var m = selectedDate.getMonth();
+    setSelectedDate(new Date(selectedDate.setMonth(m - 1, 1)));
+  }
   return (
     <div className="calendar-group">
       {
@@ -66,9 +68,11 @@ function Calendar({ inDate, outDate, changeDate }) {
         <table className="calendar">
           <thead>
             <tr>
-              <th colSpan="7">
+              <th colSpan="1" onClick={clickBack}>&lt;</th>
+              <th colSpan="5">
                 { selectedDate.toLocaleDateString('en-US', { month: 'long' }) }
               </th>
+              <th colSpan="1" onClick={clickNext}>&gt;</th>
             </tr>
             <tr>
               { weekdays.map((day, i) => <th key={i}>{day}</th>) }
