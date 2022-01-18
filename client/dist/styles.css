@@ -2,7 +2,7 @@
   font-family: 'Ubuntu', sans-serif;
 }
 .date-picker {
-  margin: 5% 30%;
+  margin: 10% 40%;
 }
 .in-out-group {
   display: grid;
@@ -25,7 +25,7 @@
 .calendar-group {
   display: grid;
   grid-template-columns: 1fr;
-  margin: 2% 0;
+  margin: 5% 0;
   justify-items: center;
 }
 .calendar {
@@ -37,8 +37,11 @@
 .date-in-out-active {
   border: 2px solid #B6B6B6;
 }
-.wkday {
+.wkdays {
   color: #B6B6B6;
+  margin: 5%;
+}
+.dates {
   margin: 5% 0;
 }
 table {

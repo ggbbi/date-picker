@@ -102,8 +102,8 @@ function Calendar({ inDate, outDate, changeDate }) {
               </th>
               <th colSpan="1" onClick={clickNext}>&gt;</th>
             </tr>
-            <tr>
-              { weekdays.map((day, i) => <th key={i} className="wkday">{day}</th>) }
+            <tr className="wkdays">
+              { weekdays.map((day, i) => <th key={i}>{day}</th>) }
             </tr>
           </thead>
           <tbody>
