@@ -15,7 +15,7 @@ function Calendar({ inDate, outDate, changeDate }) {
       var y = selectedDate.getFullYear();
       var m = selectedDate.getMonth();
       setFirstWeek(getFirstWeek(y, m));
-      setOtherWeeks(getOtherWeeks(y, m, weekdays));
+      setOtherWeeks(getOtherWeeks(y, m));
     }
   }, [ selectedDate ]);
 
@@ -42,14 +42,15 @@ function Calendar({ inDate, outDate, changeDate }) {
   function getOtherWeeks(y, m) {
     var firstDay = new Date(y, m, 1).getDay();
     var weeks = [];
-    var week = [];
-    for (let i = 8 - firstDay; i < new Date(y, m, 0).getDate(); i + 7) {
+    for (let i = 8 - firstDay; i < new Date(y, m, 0).getDate(); i += 7) {
+      var week = [];
       for (let j = 0; j < 7; j++) {
-        week.push(i + j);
+        if (i + j <= new Date(y, m, 0).getDate()) {
+          week.push(i + j);
+        }
       }
       weeks.push(week);
     }
-    console.log(weeks);
     return weeks;
   }
   // function clickNext() {
@@ -77,7 +78,15 @@ function Calendar({ inDate, outDate, changeDate }) {
             <tr>
               { firstWeek.map((date, i) => <td key={i}>{date}</td>) }
             </tr>
-            {/* { otherWeeks.map((date, i) => <td>{date}</td>) } */}
+            {
+              otherWeeks.map((week, i) => (
+                <tr key={i}>
+                  {
+                    week.map((date, i) => <td key={i}>{date}</td>)
+                  }
+                </tr>
+              ))
+            }
           </tbody>
         </table>
         : null
