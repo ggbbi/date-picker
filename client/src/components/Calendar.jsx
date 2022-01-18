@@ -85,15 +85,19 @@ function Calendar({ changeDate }) {
           </thead>
           <tbody>
             <tr>
-              { firstWeek.map((date, i) => <td key={i}>{date}</td>) }
+              {
+                firstWeek.map((date, i) =>
+                  <td key={i} onClick={e => clickDate(e.target.innerHTML)}>{date}</td>
+                )
+              }
             </tr>
             {
               otherWeeks.map((week, i) => (
                 <tr key={i}>
                   {
-                    week.map((date, i) => (
+                    week.map((date, i) =>
                       <td key={i} onClick={e => clickDate(e.target.innerHTML)}>{date}</td>
-                    ))
+                    )
                   }
                 </tr>
               ))

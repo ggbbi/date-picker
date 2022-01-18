@@ -24,8 +24,15 @@ function DatePicker() {
     if (active == 'check-in') {
       setInDate(value.toLocaleDateString('en-us'));
       chooseDate('check-out');
+      if (value >= new Date(outDate)) {
+        setOutDate(null);
+      }
     } else if (active == 'check-out') {
       setOutDate(value.toLocaleDateString('en-us'));
+      if (value <= new Date(inDate)) {
+        setInDate(value.toLocaleDateString('en-us'));
+        setOutDate(null);
+      }
     }
   }
   return (
