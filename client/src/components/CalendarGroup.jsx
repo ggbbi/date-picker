@@ -37,10 +37,12 @@ function CalendarGroup({ inDate, outDate, changeDate }) {
   function clickNext() {
     var m = selectedDate.getMonth();
     setSelectedDate(new Date(selectedDate.setMonth(m + 1, 1)));
+    changeStyle();
   }
   function clickBack() {
     var m = selectedDate.getMonth();
     setSelectedDate(new Date(selectedDate.setMonth(m - 1, 1)));
+    changeStyle();
   }
 
   return (

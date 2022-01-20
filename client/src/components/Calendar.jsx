@@ -52,9 +52,9 @@ function Calendar({ selectedDate, display, changeDate, clickBackNext }) {
     return weeks;
   }
   function clickDate({ year, month, date }) {
-    console.log(year, month, date)
     changeDate(new Date(year, month, date));
   }
+
   return (
     selectedDate ?
     <table className="calendar">
