@@ -1,8 +1,10 @@
 #app {
   font-family: 'Ubuntu', sans-serif;
+  height: 100vh;
 }
 .date-picker {
   margin: 10% 20%;
+  height: 50vh;
 }
 .in-out-group {
   display: grid;
@@ -27,9 +29,11 @@
   grid-template-columns: 1fr 1fr;
   justify-items: center;
   margin: 5% 0;
+  height: 50%;
 }
 .calendar {
   width: 80%;
+  height: 100%;
 }
 .date-active {
   background-color: #B6B6B6;

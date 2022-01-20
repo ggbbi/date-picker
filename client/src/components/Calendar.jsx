@@ -6,6 +6,7 @@ function Calendar({ inDate, outDate, selectedDate, display, changeDate, clickBac
   var weekdays = getWeekdays();
 
   useEffect(() => {
+    // console.log(selectedDate)
     if (selectedDate) {
       var y = selectedDate.getFullYear();
       var m = selectedDate.getMonth();
@@ -49,10 +50,11 @@ function Calendar({ inDate, outDate, selectedDate, display, changeDate, clickBac
   function getFirstWeek(y, m) {
     var firstDay = null;
     var week = [];
+    var month = m;
     if (display == 'secondary') {
-      m++;
+      month++;
     }
-    firstDay = new Date(y, m, 1).getDay();
+    firstDay = new Date(y, month, 1).getDay();
     for (let i = 0; i < firstDay; i++) {
       week.push('');
     }
@@ -64,14 +66,15 @@ function Calendar({ inDate, outDate, selectedDate, display, changeDate, clickBac
   function getOtherWeeks(y, m) {
     var firstDay = null;
     var weeks = [];
+    var month = m;
     if (display == 'secondary') {
-      m++;
+      month++;
     }
-    firstDay = new Date(y, m, 1).getDay();
-    for (let i = 8 - firstDay; i < new Date(y, m, 0).getDate(); i += 7) {
+    firstDay = new Date(y, month, 1).getDay();
+    for (let i = 8 - firstDay; i <= new Date(y, month + 1, 0).getDate(); i += 7) {
       var week = [];
       for (let j = 0; j < 7; j++) {
-        if (i + j <= new Date(y, m + 1, 0).getDate()) {
+        if (i + j <= new Date(y, month + 1, 0).getDate()) {
           week.push(i + j);
         }
       }
