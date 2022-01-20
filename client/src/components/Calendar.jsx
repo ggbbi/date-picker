@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function Calendar({ selectedDate, display, changeDate, clickBackNext }) {
+function Calendar({ selectedDate, display, changeDate, clickBackNext, updateStyle }) {
   var [ firstWeek, setFirstWeek ] = useState([]);
   var [ otherWeeks, setOtherWeeks ] = useState([]);
   var weekdays = getWeekdays();
@@ -16,6 +16,10 @@ function Calendar({ selectedDate, display, changeDate, clickBackNext }) {
       setOtherWeeks(getOtherWeeks(y, m));
     }
   }, [ selectedDate ]);
+
+  useEffect(() => {
+    updateStyle();
+  }, [ firstWeek, otherWeeks ])
 
   function getWeekdays() {
     var weekdays = [];
@@ -70,13 +74,11 @@ function Calendar({ selectedDate, display, changeDate, clickBackNext }) {
               display == "primary" ?
               selectedDate
               .toLocaleDateString(
-                'en-US',
-                { month: 'long', year: 'numeric' }
+                'en-US', { month: 'long', year: 'numeric' }
               )
               : new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1)
               .toLocaleDateString(
-                'en-US',
-                { month: 'long', year: 'numeric'}
+                'en-US', { month: 'long', year: 'numeric'}
               )
             }
           </th>
@@ -98,7 +100,9 @@ function Calendar({ selectedDate, display, changeDate, clickBackNext }) {
                 key={i}
                 className="date"
                 data-year={selectedDate.getFullYear()}
-                data-month={display == 'primary' ? selectedDate.getMonth() : selectedDate.getMonth() + 1}
+                data-month={display == 'primary' ?
+                  selectedDate.getMonth()
+                  : selectedDate.getMonth() + 1}
                 data-date={date}
                 onClick={e => clickDate(e.target.dataset)}
               >{date}</td>
@@ -114,7 +118,9 @@ function Calendar({ selectedDate, display, changeDate, clickBackNext }) {
                     key={i}
                     className="date"
                     data-year={selectedDate.getFullYear()}
-                    data-month={display == 'primary' ? selectedDate.getMonth() : selectedDate.getMonth() + 1}
+                    data-month={display == 'primary' ?
+                      selectedDate.getMonth()
+                      : selectedDate.getMonth() + 1}
                     data-date={date}
                     onClick={e => clickDate(e.target.dataset)}
                   >{date}</td>

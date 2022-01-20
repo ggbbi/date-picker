@@ -13,31 +13,32 @@ function CalendarGroup({ inDate, outDate, changeDate }) {
   }, [ inDate, outDate, selectedDate ])
 
   function updateStyle() {
-    if (inDate || outDate) {
-      document.querySelectorAll('.date').forEach((element) => {
-        var date = new Date(element.dataset.year, element.dataset.month, element.dataset.date);
-        if (date > new Date(inDate) && date < new Date(outDate)) {
-          element.classList.add('date-active');
-        } else if (date.toLocaleDateString('en-us') == inDate
-        || date.toLocaleDateString('en-us') == outDate)
-        {
-          console.log('active', date)
-          element.classList.add('date-in-out-active');
-          element.classList.remove('date-active');
-        } else {
-          element.classList.remove('date-active');
-          element.classList.remove('date-in-out-active');
-        }
-      });
-    }
+    document.querySelectorAll('.date').forEach((element) => {
+      var date = new Date(
+        element.dataset.year,
+        element.dataset.month,
+        element.dataset.date
+      );
+      if (date > new Date(inDate) && date < new Date(outDate)) {
+        element.classList.add('date-active');
+      } else if (date.toLocaleDateString('en-us') == inDate
+      || date.toLocaleDateString('en-us') == outDate)
+      {
+        element.classList.add('date-in-out-active');
+        element.classList.remove('date-active');
+      } else {
+        element.classList.remove('date-active');
+        element.classList.remove('date-in-out-active');
+      }
+    });
   }
   function clickNext() {
     var m = selectedDate.getMonth();
-    setSelectedDate(new Date(selectedDate.setMonth(m + 2, 1))); // async?
+    setSelectedDate(new Date(selectedDate.setMonth(m + 1)));
   }
   function clickBack() {
     var m = selectedDate.getMonth();
-    setSelectedDate(new Date(selectedDate.setMonth(m - 2, 1))); // async?
+    setSelectedDate(new Date(selectedDate.setMonth(m - 1)));
   }
 
   return (
@@ -47,12 +48,14 @@ function CalendarGroup({ inDate, outDate, changeDate }) {
         display="primary"
         changeDate={changeDate}
         clickBackNext={clickBack}
+        updateStyle={updateStyle}
       />
       <Calendar
         selectedDate={selectedDate}
         display="secondary"
         changeDate={changeDate}
         clickBackNext={clickNext}
+        updateStyle={updateStyle}
       />
     </div>
   )
