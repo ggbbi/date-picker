@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-function Calendar({ inDate, outDate, display, changeDate }) {
-  var [ selectedDate, setSelectedDate ] = useState(null);
+function Calendar({ inDate, outDate, selectedDate, display, changeDate, clickBackNext }) {
   var [ firstWeek, setFirstWeek ] = useState([]);
   var [ otherWeeks, setOtherWeeks ] = useState([]);
   var weekdays = getWeekdays();
-
-  useEffect(() => {
-    setSelectedDate(new Date());
-  }, [])
 
   useEffect(() => {
     if (selectedDate) {
@@ -84,59 +79,64 @@ function Calendar({ inDate, outDate, display, changeDate }) {
     }
     return weeks;
   }
-  function clickNext() {
-    var m = selectedDate.getMonth();
-    setSelectedDate(new Date(selectedDate.setMonth(m + 1, 1)));
-  }
-  function clickBack() {
-    var m = selectedDate.getMonth();
-    setSelectedDate(new Date(selectedDate.setMonth(m - 1, 1)));
-  }
+  // fix for click, both pri/sec y m are going through
   function clickDate(date) {
     var y = selectedDate.getFullYear();
     var m = selectedDate.getMonth();
     changeDate(new Date(y, m, date));
   }
   return (
-
-        selectedDate ?
-        <table className="calendar">
-          <thead>
-            <tr>
+    selectedDate ?
+    <table className="calendar">
+      <thead>
+        <tr>
+          {
+            display == "primary" ?
+            <th colSpan="1" onClick={clickBackNext}>&lt;</th>
+            : <th colSpan="1"></th>
+          }
+          <th colSpan="5">
+            {
+              display == "primary" ?
+              selectedDate
+              .toLocaleDateString(
+                'en-US',
+                { month: 'long', year: 'numeric' }
+              )
+              : new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1)
+              .toLocaleDateString(
+              'en-US',
+              { month: 'long', year: 'numeric'}
+              )
+            }
+          </th>
+          {
+            display == "secondary" ?
+            <th colSpan="1" onClick={clickBackNext}>&gt;</th>
+            : <th colSpan="1"></th>
+          }
+        </tr>
+        <tr className="wkdays">
+          { weekdays.map((day, i) => <th key={i}>{day}</th>) }
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          {
+            firstWeek.map((date, i) =>
+              <td
+                key={i}
+                className="date"
+                onClick={e => clickDate(e.target.innerHTML)}
+              >{date}</td>
+            )
+          }
+        </tr>
+        {
+          otherWeeks.map((week, i) => (
+            <tr key={i}>
               {
-                display == "primary" ?
-                <th colSpan="1" onClick={clickBack}>&lt;</th>
-                : <th colSpan="1"></th>
-              }
-              <th colSpan="5">
-                {
-                  display == "primary" ?
-                  selectedDate
-                  .toLocaleDateString(
-                    'en-US',
-                    { month: 'long', year: 'numeric' }
-                  )
-                  : new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1)
-                  .toLocaleDateString(
-                  'en-US',
-                  { month: 'long', year: 'numeric'}
-                  )
-                }
-              </th>
-              {
-                display == "secondary" ?
-                <th colSpan="1" onClick={clickNext}>&gt;</th>
-                : <th colSpan="1"></th>
-              }
-            </tr>
-            <tr className="wkdays">
-              { weekdays.map((day, i) => <th key={i}>{day}</th>) }
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              {
-                firstWeek.map((date, i) =>
+                week.map((date, i) =>
                   <td
                     key={i}
                     className="date"
@@ -145,25 +145,11 @@ function Calendar({ inDate, outDate, display, changeDate }) {
                 )
               }
             </tr>
-            {
-              otherWeeks.map((week, i) => (
-                <tr key={i}>
-                  {
-                    week.map((date, i) =>
-                      <td
-                        key={i}
-                        className="date"
-                        onClick={e => clickDate(e.target.innerHTML)}
-                      >{date}</td>
-                    )
-                  }
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
-        : null
-
+          ))
+        }
+      </tbody>
+    </table>
+    : null
   );
 }
 
