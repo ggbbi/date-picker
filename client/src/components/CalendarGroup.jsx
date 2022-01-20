@@ -9,40 +9,35 @@ function CalendarGroup({ inDate, outDate, changeDate }) {
   }, [])
 
   useEffect(() => {
-    changeStyle();
-  }, [ inDate, outDate ])
+    updateStyle();
+  }, [ inDate, outDate, selectedDate ])
 
-  function changeStyle() {
-    if (selectedDate) {
-      var y = selectedDate.getFullYear();
-      var m = selectedDate.getMonth();
-      if (inDate || outDate) {
-        document.querySelectorAll('.date').forEach((element) => {
-          var date = new Date(y, m, element.textContent);
-          if (date > new Date(inDate) && date < new Date(outDate)) {
-            element.classList.add('date-active');
-          } else if (date.toLocaleDateString('en-us') == inDate
-            || date.toLocaleDateString('en-us') == outDate)
-          {
-            element.classList.add('date-in-out-active');
-            element.classList.remove('date-active');
-          } else {
-            element.classList.remove('date-active');
-            element.classList.remove('date-in-out-active');
-          }
-        });
-      }
+  function updateStyle() {
+    if (inDate || outDate) {
+      document.querySelectorAll('.date').forEach((element) => {
+        var date = new Date(element.dataset.year, element.dataset.month, element.dataset.date);
+        if (date > new Date(inDate) && date < new Date(outDate)) {
+          element.classList.add('date-active');
+        } else if (date.toLocaleDateString('en-us') == inDate
+        || date.toLocaleDateString('en-us') == outDate)
+        {
+          console.log('active', date)
+          element.classList.add('date-in-out-active');
+          element.classList.remove('date-active');
+        } else {
+          element.classList.remove('date-active');
+          element.classList.remove('date-in-out-active');
+        }
+      });
     }
   }
   function clickNext() {
     var m = selectedDate.getMonth();
-    setSelectedDate(new Date(selectedDate.setMonth(m + 1, 1)));
-    changeStyle();
+    setSelectedDate(new Date(selectedDate.setMonth(m + 2, 1))); // async?
   }
   function clickBack() {
     var m = selectedDate.getMonth();
-    setSelectedDate(new Date(selectedDate.setMonth(m - 1, 1)));
-    changeStyle();
+    setSelectedDate(new Date(selectedDate.setMonth(m - 2, 1))); // async?
   }
 
   return (

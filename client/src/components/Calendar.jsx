@@ -30,7 +30,7 @@ function Calendar({ selectedDate, display, changeDate, clickBackNext }) {
     var firstDay = new Date(y, m, 1).getDay();
     var week = [];
     for (let i = 0; i < firstDay; i++) {
-      week.push('');
+      week.push(null);
     }
     for (let i = 0; i < 7 - firstDay; i++) {
       week.push(i + 1);
