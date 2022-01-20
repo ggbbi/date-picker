@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import InOutGroup from './InOutGroup.jsx';
-import Calendar from './Calendar.jsx';
+import CalendarGroup from './CalendarGroup.jsx';
 
 function DatePicker() {
   var [ inDate, setInDate ] = useState(null);
@@ -45,7 +45,7 @@ function DatePicker() {
         />
       {
         showCal ?
-        <Calendar
+        <CalendarGroup
           inDate={inDate}
           outDate={outDate}
           changeDate={changeDate}

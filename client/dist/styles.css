@@ -2,7 +2,7 @@
   font-family: 'Ubuntu', sans-serif;
 }
 .date-picker {
-  margin: 10% 40%;
+  margin: 10% 20%;
 }
 .in-out-group {
   display: grid;
@@ -24,12 +24,12 @@
 }
 .calendar-group {
   display: grid;
-  grid-template-columns: 1fr;
-  margin: 5% 0;
+  grid-template-columns: 1fr 1fr;
   justify-items: center;
+  margin: 5% 0;
 }
 .calendar {
-  width: 100%;
+  width: 80%;
 }
 .date-active {
   background-color: #B6B6B6;

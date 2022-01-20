@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function Calendar({ inDate, outDate, changeDate }) {
+function Calendar({ inDate, outDate, display, changeDate }) {
   var [ selectedDate, setSelectedDate ] = useState(null);
   var [ firstWeek, setFirstWeek ] = useState([]);
   var [ otherWeeks, setOtherWeeks ] = useState([]);
@@ -52,8 +52,12 @@ function Calendar({ inDate, outDate, changeDate }) {
     return weekdays;
   }
   function getFirstWeek(y, m) {
-    var firstDay = new Date(y, m, 1).getDay();
+    var firstDay = null;
     var week = [];
+    if (display == 'secondary') {
+      m++;
+    }
+    firstDay = new Date(y, m, 1).getDay();
     for (let i = 0; i < firstDay; i++) {
       week.push('');
     }
@@ -63,8 +67,12 @@ function Calendar({ inDate, outDate, changeDate }) {
     return week;
   }
   function getOtherWeeks(y, m) {
-    var firstDay = new Date(y, m, 1).getDay();
+    var firstDay = null;
     var weeks = [];
+    if (display == 'secondary') {
+      m++;
+    }
+    firstDay = new Date(y, m, 1).getDay();
     for (let i = 8 - firstDay; i < new Date(y, m, 0).getDate(); i += 7) {
       var week = [];
       for (let j = 0; j < 7; j++) {
@@ -90,17 +98,36 @@ function Calendar({ inDate, outDate, changeDate }) {
     changeDate(new Date(y, m, date));
   }
   return (
-    <div className="calendar-group">
-      {
+
         selectedDate ?
         <table className="calendar">
           <thead>
             <tr>
-              <th colSpan="1" onClick={clickBack}>&lt;</th>
+              {
+                display == "primary" ?
+                <th colSpan="1" onClick={clickBack}>&lt;</th>
+                : <th colSpan="1"></th>
+              }
               <th colSpan="5">
-                { selectedDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) }
+                {
+                  display == "primary" ?
+                  selectedDate
+                  .toLocaleDateString(
+                    'en-US',
+                    { month: 'long', year: 'numeric' }
+                  )
+                  : new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1)
+                  .toLocaleDateString(
+                  'en-US',
+                  { month: 'long', year: 'numeric'}
+                  )
+                }
               </th>
-              <th colSpan="1" onClick={clickNext}>&gt;</th>
+              {
+                display == "secondary" ?
+                <th colSpan="1" onClick={clickNext}>&gt;</th>
+                : <th colSpan="1"></th>
+              }
             </tr>
             <tr className="wkdays">
               { weekdays.map((day, i) => <th key={i}>{day}</th>) }
@@ -136,8 +163,7 @@ function Calendar({ inDate, outDate, changeDate }) {
           </tbody>
         </table>
         : null
-      }
-    </div>
+
   );
 }
 
