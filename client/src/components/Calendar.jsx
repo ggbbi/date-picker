@@ -1,42 +1,21 @@
 import React, { useState, useEffect } from 'react';
 
-function Calendar({ inDate, outDate, selectedDate, display, changeDate, clickBackNext }) {
+function Calendar({ selectedDate, display, changeDate, clickBackNext }) {
   var [ firstWeek, setFirstWeek ] = useState([]);
   var [ otherWeeks, setOtherWeeks ] = useState([]);
   var weekdays = getWeekdays();
 
   useEffect(() => {
-    // console.log(selectedDate)
     if (selectedDate) {
       var y = selectedDate.getFullYear();
       var m = selectedDate.getMonth();
+      if (display == 'secondary') {
+        m++;
+      }
       setFirstWeek(getFirstWeek(y, m));
       setOtherWeeks(getOtherWeeks(y, m));
     }
   }, [ selectedDate ]);
-
-  useEffect(() => {
-    if (selectedDate) {
-      var y = selectedDate.getFullYear();
-      var m = selectedDate.getMonth();
-      if (inDate || outDate) {
-        document.querySelectorAll('.date').forEach((element) => {
-          var date = new Date(y, m, element.textContent);
-          if (date > new Date(inDate) && date < new Date(outDate)) {
-            element.classList.add('date-active');
-          } else if (date.toLocaleDateString('en-us') == inDate
-            || date.toLocaleDateString('en-us') == outDate)
-          {
-            element.classList.add('date-in-out-active');
-            element.classList.remove('date-active');
-          } else {
-            element.classList.remove('date-active');
-            element.classList.remove('date-in-out-active');
-          }
-        });
-      }
-    }
-  }, [ inDate, outDate, firstWeek ])
 
   function getWeekdays() {
     var weekdays = [];
@@ -48,13 +27,8 @@ function Calendar({ inDate, outDate, selectedDate, display, changeDate, clickBac
     return weekdays;
   }
   function getFirstWeek(y, m) {
-    var firstDay = null;
+    var firstDay = new Date(y, m, 1).getDay();
     var week = [];
-    var month = m;
-    if (display == 'secondary') {
-      month++;
-    }
-    firstDay = new Date(y, month, 1).getDay();
     for (let i = 0; i < firstDay; i++) {
       week.push('');
     }
@@ -64,17 +38,12 @@ function Calendar({ inDate, outDate, selectedDate, display, changeDate, clickBac
     return week;
   }
   function getOtherWeeks(y, m) {
-    var firstDay = null;
+    var firstDay = new Date(y, m, 1).getDay();
     var weeks = [];
-    var month = m;
-    if (display == 'secondary') {
-      month++;
-    }
-    firstDay = new Date(y, month, 1).getDay();
-    for (let i = 8 - firstDay; i <= new Date(y, month + 1, 0).getDate(); i += 7) {
+    for (let i = 8 - firstDay; i <= new Date(y, m + 1, 0).getDate(); i += 7) {
       var week = [];
       for (let j = 0; j < 7; j++) {
-        if (i + j <= new Date(y, month + 1, 0).getDate()) {
+        if (i + j <= new Date(y, m + 1, 0).getDate()) {
           week.push(i + j);
         }
       }
@@ -82,11 +51,9 @@ function Calendar({ inDate, outDate, selectedDate, display, changeDate, clickBac
     }
     return weeks;
   }
-  // fix for click, both pri/sec y m are going through
-  function clickDate(date) {
-    var y = selectedDate.getFullYear();
-    var m = selectedDate.getMonth();
-    changeDate(new Date(y, m, date));
+  function clickDate({ year, month, date }) {
+    console.log(year, month, date)
+    changeDate(new Date(year, month, date));
   }
   return (
     selectedDate ?
@@ -108,8 +75,8 @@ function Calendar({ inDate, outDate, selectedDate, display, changeDate, clickBac
               )
               : new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1)
               .toLocaleDateString(
-              'en-US',
-              { month: 'long', year: 'numeric'}
+                'en-US',
+                { month: 'long', year: 'numeric'}
               )
             }
           </th>
@@ -130,7 +97,10 @@ function Calendar({ inDate, outDate, selectedDate, display, changeDate, clickBac
               <td
                 key={i}
                 className="date"
-                onClick={e => clickDate(e.target.innerHTML)}
+                data-year={selectedDate.getFullYear()}
+                data-month={display == 'primary' ? selectedDate.getMonth() : selectedDate.getMonth() + 1}
+                data-date={date}
+                onClick={e => clickDate(e.target.dataset)}
               >{date}</td>
             )
           }
@@ -143,7 +113,10 @@ function Calendar({ inDate, outDate, selectedDate, display, changeDate, clickBac
                   <td
                     key={i}
                     className="date"
-                    onClick={e => clickDate(e.target.innerHTML)}
+                    data-year={selectedDate.getFullYear()}
+                    data-month={display == 'primary' ? selectedDate.getMonth() : selectedDate.getMonth() + 1}
+                    data-date={date}
+                    onClick={e => clickDate(e.target.dataset)}
                   >{date}</td>
                 )
               }
